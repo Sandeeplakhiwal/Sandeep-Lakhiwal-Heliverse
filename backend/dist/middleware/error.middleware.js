@@ -23,7 +23,7 @@ const ErrorMiddleware = (err, req, res, next) => {
         err = new errorhandler_1.default(message, 400);
     }
     return res.status(err.statusCode).json({
-        success: true,
+        success: false,
         error: err.message,
     });
 };

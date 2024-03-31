@@ -43,13 +43,3 @@ const userSchema = new mongoose_1.default.Schema({
     },
 });
 exports.User = mongoose_1.default.model("User", userSchema);
-/*   {
-    id: 1,
-    first_name: "Anet",
-    last_name: "Doe",
-    email: "adoe0@comcast.net",
-    gender: "Female",
-    avatar: "https://robohash.org/sintessequaerat.png?size=50x50&set=set1",
-    domain: "Sales",
-    available: false,
-  }, */

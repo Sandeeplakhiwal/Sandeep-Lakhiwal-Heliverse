@@ -27,10 +27,12 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // Importing Routes
-import otherRoute from "./routes/other.route";
+import otherRoutes from "./routes/other.route";
+import userRoutes from "./routes/user.route";
 
 // Using Routes
-app.use("/api", otherRoute);
+app.use("/api", otherRoutes);
+app.use("/api", userRoutes);
 
 // Usign error middleware for exception handling
 app.use(ErrorMiddleware);

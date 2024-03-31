@@ -29,7 +29,7 @@ const ErrorMiddleware = (
   }
 
   return res.status(err.statusCode).json({
-    success: true,
+    success: false,
     error: err.message,
   });
 };
