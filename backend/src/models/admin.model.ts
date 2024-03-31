@@ -1,12 +1,14 @@
+import { compare, hash } from "bcryptjs";
 import mongoose, { Document, Types } from "mongoose";
 import Validator from "validator";
+import jwt from "jsonwebtoken";
 
 interface IAvatar {
   public_id: string;
   url: string;
 }
 
-interface IAdminDocument extends Document {
+export interface IAdminDocument extends Document {
   first_name: string;
   last_name: string;
   email: string;
@@ -14,6 +16,8 @@ interface IAdminDocument extends Document {
   avatar: IAvatar;
   teams: Types.ObjectId[];
   created_at: Date;
+  generateToken: () => Promise<string>;
+  comparePassword: (password: string) => Promise<Boolean>;
 }
 
 const adminSchema = new mongoose.Schema<IAdminDocument>({
@@ -61,5 +65,26 @@ const adminSchema = new mongoose.Schema<IAdminDocument>({
     default: Date.now(),
   },
 });
+
+// Hashing password before saving into database
+adminSchema.pre<IAdminDocument>("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+  this.password = await hash(this.password, 10);
+  next();
+});
+
+// Generate JWT token
+adminSchema.methods.generateToken = async function () {
+  return jwt.sign({ _id: this._id }, `${process.env.JWT_SECRET}`, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
+};
+
+// Comparing admin password
+adminSchema.methods.comparePassword = async function (password: string) {
+  return await compare(password, this.password);
+};
 
 export const Admin = mongoose.model("Admin", adminSchema);

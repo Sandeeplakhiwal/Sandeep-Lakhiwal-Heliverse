@@ -28,9 +28,13 @@ app.get("/", (req, res) => {
 // Importing Routes
 const other_route_1 = __importDefault(require("./routes/other.route"));
 const user_route_1 = __importDefault(require("./routes/user.route"));
+const admin_route_1 = __importDefault(require("./routes/admin.route"));
+const team_route_1 = __importDefault(require("./routes/team.route"));
 // Using Routes
 app.use("/api", other_route_1.default);
 app.use("/api", user_route_1.default);
+app.use("/api", admin_route_1.default);
+app.use("/api", team_route_1.default);
 // Usign error middleware for exception handling
 app.use(error_middleware_1.default);
 exports.default = app;

@@ -1,11 +1,10 @@
 import mongoose, { Document, Types } from "mongoose";
-import { IUserDocument } from "./user.model";
 
 export interface ITeamDocument extends Document {
   name: string;
   domain: string;
   admin: Types.ObjectId;
-  users: IUserDocument[];
+  users: Types.ObjectId[];
   created_at: Date;
 }
 
@@ -23,6 +22,7 @@ const teamSchema = new mongoose.Schema<ITeamDocument>({
   admin: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Admin",
+    required: true,
   },
   users: [
     {
@@ -36,4 +36,4 @@ const teamSchema = new mongoose.Schema<ITeamDocument>({
   },
 });
 
-export const Team = mongoose.model("Team", teamSchema);
+export const Team = mongoose.model<ITeamDocument>("Team", teamSchema);

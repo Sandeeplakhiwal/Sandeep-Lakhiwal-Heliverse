@@ -19,6 +19,7 @@ const teamSchema = new mongoose_1.default.Schema({
     admin: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "Admin",
+        required: true,
     },
     users: [
         {
