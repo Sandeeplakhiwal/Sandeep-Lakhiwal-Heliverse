@@ -8,14 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDB = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const { connection } = yield mongoose_1.default.connect(process.env.MONGO_URI || "");
-    console.log(`MongoDB connected with ${connection.host}`);
-});
-exports.connectDB = connectDB;
+exports.AddMockData = void 0;
+const heliverse_mock_data_1 = require("../heliverse_mock_data");
+const user_model_1 = require("../models/user.model");
+const catchAsyncError_1 = require("../middleware/catchAsyncError");
+exports.AddMockData = (0, catchAsyncError_1.catchAsyncError)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const docs = heliverse_mock_data_1.Mock_data;
+    yield user_model_1.User.insertMany(docs);
+    return res.status(200).json({
+        success: true,
+        message: "Mock data inserted successfully",
+    });
+}));
