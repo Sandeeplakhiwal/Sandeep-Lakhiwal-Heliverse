@@ -13,4 +13,5 @@ router.get("/users", user_controller_1.getAllUsers);
 router.get("/users/:id", user_controller_1.getUserDetails);
 router.post("/users", upload.single("avatar"), user_controller_1.createNewUser);
 router.put("/users/:id", user_controller_1.updateUserInfo);
+router.delete("/users/:id", user_controller_1.deleteUser);
 exports.default = router;

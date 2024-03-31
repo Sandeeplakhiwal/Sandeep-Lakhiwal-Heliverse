@@ -112,3 +112,15 @@ export const updateUserInfo = catchAsyncError(
     });
   }
 );
+
+export const deleteUser = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.id;
+    if (!userId) return next(new ErrorHandler("Please provide user id", 400));
+    await User.findByIdAndDelete(userId);
+    return res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+    });
+  }
+);

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUserInfo = exports.getUserDetails = exports.getAllUsers = exports.createNewUser = void 0;
+exports.deleteUser = exports.updateUserInfo = exports.getUserDetails = exports.getAllUsers = exports.createNewUser = void 0;
 const catchAsyncError_1 = require("../middleware/catchAsyncError");
 const user_model_1 = require("../models/user.model");
 const apiFeature_1 = require("../utils/apiFeature");
@@ -100,5 +100,15 @@ exports.updateUserInfo = (0, catchAsyncError_1.catchAsyncError)((req, res, next)
         success: true,
         message: "User updated successfully",
         user,
+    });
+}));
+exports.deleteUser = (0, catchAsyncError_1.catchAsyncError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.id;
+    if (!userId)
+        return next(new errorhandler_1.default("Please provide user id", 400));
+    yield user_model_1.User.findByIdAndDelete(userId);
+    return res.status(200).json({
+        success: true,
+        message: "User deleted successfully",
     });
 }));
